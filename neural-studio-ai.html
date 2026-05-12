@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Código Fotografía Zero™ — Retratos Ejecutivos Hiperrealistas con IA</title>
+<meta name="description" content="Sistema cinematográfico premium para convertir selfies comunes en retratos de autoridad usando IA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070d;
+  --bg2:#0f0f1a;
+  --bgc:#12121f;
+  --purple:#7c3aed;
+  --purpleL:#a855f7;
+  --cyan:#00d4ff;
+  --green:#39ff14;
+  --white:#ffffff;
+  --gray:#9ca3af;
+  --muted:#6b7280;
+  --border:rgba(255,255,255,0.06);
+  --borderP:rgba(124,58,237,0.35);
+  --borderC:rgba(0,212,255,0.25);
+  --font-d:'Outfit',sans-serif;
+  --font-b:'Inter',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--font-b);line-height:1.7;overflow-x:hidden}
+img{max-width:100%; height:auto; display:block; object-fit:contain;}
+a{text-decoration:none;color:inherit}
+
+/* UTILITIES */
+.container{max-width:1180px;margin:0 auto;padding:0 24px}
+.section{padding:90px 0;position:relative;overflow:hidden}
+.section-head{text-align:center;margin-bottom:56px;position:relative;z-index:2}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);background:rgba(0,212,255,.08);padding:6px 14px;border-radius:100px;margin-bottom:14px}
+.section-head h2{font-family:var(--font-d);font-size:36px;font-weight:800;line-height:1.15;letter-spacing:-.02em}
+.divider{height:3px;width:70px;background:linear-gradient(90deg,var(--purple),var(--cyan));margin:16px auto 0;border-radius:6px}
+.grad-text{background:linear-gradient(135deg,var(--purpleL),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.reveal{opacity:0;transform:translateY(30px);transition:all .6s cubic-bezier(.4,0,.2,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* GLOW BG */
+.glow-top::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:700px;height:320px;background:radial-gradient(ellipse,rgba(124,58,237,.18) 0%,transparent 65%);pointer-events:none;z-index:0}
+.glow-center::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(124,58,237,.13) 0%,transparent 65%);pointer-events:none;z-index:0}
+
+/* NAVBAR */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,7,13,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 0}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:0 24px}
+.logo{font-family:var(--font-d);font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px;letter-spacing:-.01em}
+.logo span{background:linear-gradient(135deg,#a855f7,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-cta{font-family:var(--font-d);font-size:13px;font-weight:700;padding:9px 22px;border-radius:100px;background:linear-gradient(135deg,var(--purple),#6d28d9);color:#fff;letter-spacing:.02em;transition:opacity .2s,box-shadow .2s}
+.nav-cta:hover{opacity:.9;box-shadow:0 0 24px rgba(124,58,237,.5)}
+
+/* HERO */
+#hero{padding-top:160px;padding-bottom:80px;min-height:100vh;display:flex;align-items:center;text-align:center;}
+.hero-inner{max-width:860px;margin:0 auto;position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(124,58,237,.12);border:1px solid var(--borderP);border-radius:100px;padding:8px 20px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--purpleL);margin-bottom:32px}
+h1{font-family:var(--font-d);font-size:56px;font-weight:900;line-height:1.08;letter-spacing:-.02em;margin-bottom:24px}
+.hero-sub{font-size:18px;color:var(--gray);max-width:680px;margin:0 auto 40px;line-height:1.65}
+.hero-img{position:relative; width:100%; max-width:900px; margin:0 auto 40px;}
+.hero-img img{border-radius:20px; box-shadow:0 0 80px rgba(124,58,237,.25),0 32px 64px rgba(0,0,0,.6)}
+
+/* BUTTONS & PRICES */
+.cta-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-d);font-size:18px;font-weight:800;padding:20px 48px;border-radius:16px;background:linear-gradient(135deg,#7c3aed 0%,#6d28d9 60%,#5b21b6 100%);color:#fff;letter-spacing:.03em;box-shadow:0 0 40px rgba(124,58,237,.55),0 8px 24px rgba(0,0,0,.4);transition:transform .2s,box-shadow .2s;border:none;cursor:pointer;text-transform:uppercase}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 0 56px rgba(124,58,237,.7),0 12px 32px rgba(0,0,0,.5)}
+.cta-microcopy{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:20px;font-size:13px;color:var(--muted)}
+.cta-microcopy span{display:flex;align-items:center;gap:6px}
+.cta-microcopy span::before{content:'✓';color:var(--green);font-weight:700}
+.price-box{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;padding:24px 36px;margin:0 auto 32px;display:inline-flex;flex-direction:column;gap:4px}
+.amount{font-family:var(--font-d);font-size:48px;font-weight:900;letter-spacing:-.02em;color:var(--white)}
+
+/* IMAGE SHOWCASES */
+.img-showcase{max-width: 900px; margin: 0 auto 40px; border-radius: 16px; overflow: hidden; box-shadow: 0 0 50px rgba(124,58,237,.15); border: 1px solid var(--border);}
+.img-portrait{max-width: 600px; margin: 0 auto 40px; border-radius: 16px; overflow: hidden; box-shadow: 0 0 50px rgba(124,58,237,.15); border: 1px solid var(--border);}
+.img-clean{max-width: 900px; margin: 0 auto; display: block; width: 100%; border-radius: 16px;}
+
+/* TESTIMONIALS & WHATSAPP */
+.whatsapp-scroller { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.testi-card img{width: 100%; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 12px 30px rgba(0,0,0,0.4); transition: transform 0.3s ease;}
+.testi-card img:hover{transform: translateY(-5px);}
+
+/* FAQ */
+.faq-grid{max-width:760px;margin:0 auto}
+.faq{border-bottom:1px solid var(--border);padding:24px 0}
+.faq h4{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.faq p{font-size:14px;color:var(--gray);line-height:1.6;padding-left:26px}
+
+/* FOOTER */
+footer{padding:40px 0;border-top:1px solid var(--border);text-align:center}
+.f-logo{font-family:var(--font-d);font-size:18px;font-weight:800;margin-bottom:10px}
+.f-logo .grad-text{font-size:18px}
+footer p{font-size:12px;color:var(--muted)}
+
+/* STICKY MOBILE CTA */
+.sticky-mobile{display:none;position:fixed;bottom:0;left:0;right:0;padding:12px 16px 16px;background:rgba(7,7,13,.96);backdrop-filter:blur(12px);border-top:1px solid var(--borderP);z-index:200}
+.sticky-mobile .cta-btn{width:100%;justify-content:center;font-size:15px;padding:16px 24px}
+
+/* RESPONSIVIDADE MOBILE */
+@media(max-width:900px){
+  h1{font-size:40px}
+  .hero-sub{font-size:16px}
+  .cta-microcopy{flex-wrap:wrap;gap:12px}
+  .price-box .amount{font-size:42px}
+  .sticky-mobile{display:block}
+  body{padding-bottom:80px}
+  section{padding:72px 0}
+  
+  .mobile-edge-to-edge {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(-50vw + 50%) !important;
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+  }
+  
+  .whatsapp-scroller {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 24px;
+    gap: 16px;
+    scrollbar-width: none; 
+  }
+  .whatsapp-scroller::-webkit-scrollbar { display: none; }
+  .testi-card { flex: 0 0 82%; scroll-snap-align: center; }
+}
+@media(max-width:600px){
+  h1{font-size:32px}
+  .section-head h2{font-size:28px}
+  .cta-btn{padding:14px 24px;font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo"><div class="logo-dot"></div>Código Fotografía <span>Zero™</span></div>
+    <a href="#cta-final" class="nav-cta">Acceder ahora</a>
+  </div>
+</nav>
+
+<section id="hero" class="glow-top">
+  <div class="container">
+    <div class="hero-inner reveal">
+      <div class="hero-badge"><div class="dot"></div> Código Fotografía Zero™ — Sistema Premium</div>
+      
+      <h1>Convierte selfies comunes en retratos de <span class="grad-text">autoridad usando IA.</span></h1>
+      <p class="hero-sub">El sistema visual cinematográfico premium que transforma cualquier foto amadora en presencia digital de alto valor. Cero estudios fotográficos. Cero cámaras caras. 100% Autoridad Instantánea.</p>
+      
+      <div class="hero-img">
+        <img src="assets/mockup-neural-studio-premium.png" alt="Mockup Neural Studio Premium">
+      </div>
+
+      <div class="price-box">
+        <div class="to-label" style="font-size: 14px; color: var(--gray); font-weight: 600;">Precio de lanzamiento</div>
+        <div class="amount">USD 9.90</div>
+        <div class="installment" style="font-size: 13px; color: var(--muted);">Pago único · Acceso inmediato</div>
+      </div>
+      
+      <a href="#cta-final" class="cta-btn">⚡ QUIERO ACCESO AHORA</a>
+      <div class="cta-microcopy">
+        <span>🔒 Pago 100% seguro</span>
+        <span>⚡ Acceso inmediato</span>
+        <span>🛡 Garantía 15 días</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="antes" class="glow-center">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Transformación en minutos</span>
+      <h2>De una foto casual a una <span class="grad-text">presencia premium</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="img-portrait reveal mobile-edge-to-edge">
+      <img src="assets/ANTES%20E%20DEPOIS%20EXECUTIVO.png" alt="Comparativo Antes e Después">
+    </div>
+  </div>
+</section>
+
+<section id="problema" class="section glow-center">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">El mercado te está juzgando</span>
+      <h2>La IA genérica crea caras de plástico.<br>Tu perfil exige <span class="grad-text">autoridad real.</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="img-showcase reveal mobile-edge-to-edge" style="margin-bottom: 0;">
+      <img src="assets/IA%20GENÉRICA%20VS%20PREMIUM.png" alt="IA Genérica vs Premium">
+    </div>
+  </div>
+</section>
+
+<section id="mecanismo" class="section glow-top">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">La Tecnología Detrás del Sistema</span>
+      <h2>No es un curso.<br>Es un <span class="grad-text">Motor Cinematográfico.</span></h2>
+      <div class="divider"></div>
+    </div>
+    
+    <div class="reveal" style="max-width:760px;margin:0 auto;text-align:center;margin-bottom:48px;">
+      <p style="font-size:18px;color:var(--gray);line-height:1.6">El verdadero diferencial del Código Fotografía Zero™ no es simplemente "usar IA". El secreto es nuestra plataforma integrada de ingeniería visual.</p>
+    </div>
+
+    <div class="reveal" style="background:var(--bgc);border:1px solid var(--borderP);border-radius:16px;padding:48px 24px;text-align:center;box-shadow:0 0 60px rgba(124,58,237,.15);position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-50px;right:-50px;width:150px;height:150px;background:var(--purple);filter:blur(80px);opacity:0.4;"></div>
+      <span class="hero-badge" style="margin-bottom:16px;">El Núcleo del Sistema</span>
+      <h3 style="font-family:var(--font-d);font-size:32px;font-weight:900;margin-bottom:32px;">Tecnología <span class="grad-text">Neural Studio AI™</span></h3>
+      
+      <img src="assets/MECANISMO%20ÚNICO.png" class="img-clean mobile-edge-to-edge" style="margin-bottom:32px; border:1px solid var(--border);" alt="Mecanismo Único">
+
+      <p style="color:var(--gray);font-size:16px;max-width:680px;margin:0 auto;line-height:1.7;">Dentro del Código Fotografía Zero™, recibes acceso completo al <strong>Neural Studio AI™</strong>. Esta herramienta premium de generación visual produce sesiones automáticas, organiza escenarios premium y aplica parámetros hiperrealistas.</p>
+    </div>
+  </div>
+</section>
+
+<section id="beneficios" class="section glow-center">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Construido para Profesionales</span>
+      <h2>Multiplica el valor de tu <span class="grad-text">marca personal</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="img-showcase reveal mobile-edge-to-edge" style="margin-bottom: 0;">
+      <img src="assets/GRID%20DE%20PROFISSÕES.png" alt="Grid de Profesiones">
+    </div>
+  </div>
+</section>
+
+<section id="como" class="section glow-top">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Simplicidad SaaS</span>
+      <h2>Tu nueva imagen en <span class="grad-text">3 pasos</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="img-showcase reveal mobile-edge-to-edge" style="margin-bottom: 0;">
+      <img src="assets/COMO%20FUNCIONA.png" alt="Cómo Funciona">
+    </div>
+  </div>
+</section>
+
+<section id="testimonios" class="section glow-center">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Validación Real</span>
+      <h2>Profesionales elevando su <span class="grad-text">status al instante</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="whatsapp-scroller reveal">
+      <div class="testi-card"><img src="assets/print-whatsapp-1.png" alt="Testimonio WhatsApp 1"></div>
+      <div class="testi-card"><img src="assets/print-whatsapp-2.png" alt="Testimonio WhatsApp 2"></div>
+      <div class="testi-card"><img src="assets/print-whatsapp-3.png" alt="Testimonio WhatsApp 3"></div>
+    </div>
+  </div>
+</section>
+
+<section id="bonus" class="section glow-center">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Aceleradores de Conversión</span>
+      <h2>Obtén también estos <span class="grad-text">2 Bonos Premium</span> hoy</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="img-showcase reveal mobile-edge-to-edge" style="border-radius:24px;">
+      <img src="assets/bonus-tools-premium.png" alt="Bonos Premium Consolidados">
+    </div>
+  </div>
+</section>
+
+<section id="garantia" class="section glow-top">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Satisfacción Total</span>
+      <h2>Prueba con <span class="grad-text">15 días de Garantía</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div style="max-width:680px;margin:0 auto;text-align:center;color:var(--gray);font-size:16px;line-height:1.7" class="reveal">
+      <p style="margin-bottom:24px">Confiamos tanto en la calidad hiperrealista del <strong>Neural Studio AI™</strong> que el riesgo es completamente nuestro. Tienes <strong style="color:var(--white)">15 días</strong> para probar el sistema. Si tus nuevos retratos ejecutivos no elevan tu autoridad visual, te devolvemos el 100% de tu dinero.</p>
+      <img src="assets/GARANTIA.png" alt="Garantía de 15 días" style="max-width: 200px; margin: 0 auto 20px;">
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="section glow-center">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Preguntas frecuentes</span>
+      <h2>Resolvemos tus <span class="grad-text">dudas al instante</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="faq-grid reveal">
+      <div class="faq">
+        <h4>❓ ¿Necesito saber de IA o edición fotográfica?</h4>
+        <p>No. El sistema está diseñado para que cualquier persona, sin importar su nivel técnico, pueda generar retratos premium con unos pocos clics.</p>
+      </div>
+      <div class="faq">
+        <h4>❓ ¿Qué incluye exactamente mi compra hoy?</h4>
+        <p>Recibes el sistema completo Código Fotografía Zero™, acceso al motor Neural Studio AI™, la biblioteca visual, y los bonos de lanzamiento.</p>
+      </div>
+      <div class="faq">
+        <h4>❓ ¿Existen mensualidades ocultas?</h4>
+        <p>No. Obtienes todo el acceso a este sistema estructurado con un único pago de USD 9.90. No hay renovaciones sorpresas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cta-final" class="section glow-center" style="padding-top:80px;padding-bottom:120px">
+  <div class="container">
+    <div class="cta-final-inner" style="max-width:720px;margin:0 auto;text-align:center;position:relative;z-index:2">
+      <span class="eyebrow reveal">Acceso Inmediato</span>
+      <h2 class="reveal" style="margin-bottom:24px">Eleva tu autoridad hoy por solo <span class="grad-text">USD 9.90</span></h2>
+      
+      <div class="reveal mobile-edge-to-edge" style="max-width: 600px; margin: 0 auto 32px;">
+        <img src="assets/CTA%20FINAL.png" class="img-clean" alt="Acesso Imediato CTA">
+      </div>
+
+      <div class="price-box reveal" style="margin-bottom:32px">
+        <div class="to-label" style="font-size: 14px; color: var(--gray); font-weight: 600;">Precio oficial de lanzamiento</div>
+        <div class="amount">USD 9.90</div>
+        <div class="installment" style="font-size: 13px; color: var(--muted);">Pago único · Acceso de por vida</div>
+      </div>
+      <a href="https://go.hotmart.com/G105727109I" target="_blank" class="cta-btn reveal" style="font-size:18px;padding:20px 48px;border-radius:16px;display:inline-flex">⚡ QUIERO ACCESO AHORA</a>
+      <div class="cta-microcopy reveal" style="justify-content:center">
+        <span>🔒 Pago 100% seguro</span>
+        <span>⚡ Acceso inmediato</span>
+        <span>🛡 Garantía 15 días</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sticky-mobile">
+  <a href="https://go.hotmart.com/G105727109I" target="_blank" class="cta-btn">⚡ Acceso Premium por USD 9.90</a>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="f-logo">Código Fotografía <span class="grad-text">Zero™</span></div>
+    <p>© 2024 Código Fotografía Zero™ impulsado por Neural Studio AI™. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
